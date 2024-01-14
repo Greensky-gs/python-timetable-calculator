@@ -1,6 +1,5 @@
 import tkinter
 
-
 class MainWindow():
     window: tkinter.Tk
     
