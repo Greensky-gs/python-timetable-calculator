@@ -1,0 +1,12 @@
+[
+  {
+    "name": "M. Atalie",
+    "disponibilities": [[], [], [], [], []],
+    "classes": ["history"]
+  },
+  {
+    "name": "Mme. Duluc",
+    "disponibilities": [[], [], [], [], [1]],
+    "classes": ["ses", "emc"]
+  }
+]
