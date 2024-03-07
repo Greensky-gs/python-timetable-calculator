@@ -5,6 +5,7 @@ import os.path
 from structures.Teacher import Teacher
 from structures.Student import Student
 import typing
+from calculs.scripts import generateClasses;
 
 
 class MainWindow():
@@ -52,6 +53,9 @@ class MainWindow():
         canvas.create_image(0, 0, image=img, anchor=tkinter.NW)
 
         frame.pack()
+
+    def compute(self):
+        generateClasses(self.students)
 
     def __mainFrame(self):
         return self.window.children.get('mainFrame')
@@ -127,6 +131,8 @@ class MainWindow():
             except Exception as err:
                 print(err)
                 self.errorMessage("Une erreur est survenue")
+        
+        self.compute()
 
     def setMainFrame(self):
         return tkinter.Frame(self.window, name="mainFrame", width=self.WIDTH, height=self.HEIGHT)
