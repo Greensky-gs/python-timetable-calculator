@@ -10,7 +10,7 @@ import typing
 class MainWindow():
     window: tkinter.Tk
     cache: typing.Any
-    __state: str
+    __state: str = None
     changed = True
     dimens = [1200, 800]
     WIDTH = dimens[0]
@@ -24,9 +24,10 @@ class MainWindow():
         
         self.window.title("Python Timetable calculator")
         self.window.geometry('x'.join(map(lambda x: str(x), self.dimens)))
-        self.__state = 'init'
 
         self.__clock()
+
+        self.setState('init')
         self.window.mainloop()
     
     def __clock(self):
@@ -40,6 +41,18 @@ class MainWindow():
         for x in self.window.winfo_children():
             x.destroy()
 
+    def __loadScreen(self):
+        frame = self.setMainFrame()
+
+        img = tkinter.PhotoImage(file="./src/assets/banner.png")
+
+        canvas = tkinter.Canvas(frame, width=self.WIDTH, height=self.HEIGHT)
+        canvas.pack()
+
+        canvas.create_image(0, 0, image=img, anchor=tkinter.NW)
+
+        frame.pack()
+
     def __mainFrame(self):
         return self.window.children.get('mainFrame')
 
@@ -49,7 +62,7 @@ class MainWindow():
 
         frame = self.__mainFrame()
 
-        msg = tkinter.Message(frame, text=message, width=self.WIDTH, bg="orangered2")
+        msg = tkinter.Message(frame, text=message, width=self.WIDTH, bg="orangered2", pady=20)
         msg.grid(row=3, column=1)
 
     def __teacherCall(self):
@@ -117,6 +130,7 @@ class MainWindow():
 
     def setMainFrame(self):
         return tkinter.Frame(self.window, name="mainFrame", width=self.WIDTH, height=self.HEIGHT)
+
     def __addTeacherInput(self):
         frame = self.setMainFrame()
 
@@ -141,9 +155,15 @@ class MainWindow():
         self.__state = state
         self.changed = True
 
+        self.__update()
+
     def __update(self):
         self.__clear()
         match self.__state:
+            case 'loading':
+                self.__loadScreen()
+            case 'loading2':
+                self.__loadScreen()
             case 'init':
                 self.__addTeacherInput()
             case 'second':
